@@ -4,7 +4,7 @@ export interface AppSettings {
   sourceLanguage: LanguageCode;
   targetLanguage: Exclude<LanguageCode, 'auto'>;
   mode: TranslationMode;
-  provider: 'demo' | 'openai-compatible';
+  provider: 'mymemory' | 'demo' | 'openai-compatible';
   shortcut: string;
   theme: 'light' | 'dark' | 'system';
   baseUrl: string;
@@ -16,7 +16,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   sourceLanguage: 'auto',
   targetLanguage: 'vi',
   mode: 'natural',
-  provider: 'demo',
+  provider: 'mymemory',
   shortcut: 'CommandOrControl+Shift+T',
   theme: 'light',
   baseUrl: import.meta.env.VITE_TRANSLATION_API_BASE_URL ?? 'https://api.openai.com/v1',
@@ -24,7 +24,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   glossary: [],
 };
 
-const SETTINGS_KEY = 'translaty.settings.v1';
+const SETTINGS_KEY = 'translaty.settings.v2';
 
 export function loadSettings(): AppSettings {
   try {

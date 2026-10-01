@@ -841,6 +841,14 @@ button:disabled {
 :root[data-theme='dark'] .privacy-callout {
   background: #17342c;
 }
+.privacy-callout.online {
+  color: #8a5b13;
+  background: #fff8e8;
+}
+:root[data-theme='dark'] .privacy-callout.online {
+  color: #efc779;
+  background: #3a2d16;
+}
 .setting-note {
   background: var(--surface-soft);
   color: var(--muted);

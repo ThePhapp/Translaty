@@ -66,13 +66,15 @@ export class TranslationService {
           throw new Error(`Provider omitted translation ID ${item.id}.`);
         const restored = restorePlaceholders(translated, protectedById.get(item.id)!.placeholders);
         translatedByNormalizedText.set(normalizeForMemory(item.text), restored);
-        await this.memory.put({
-          sourceText: item.text,
-          sourceLanguage: options.sourceLanguage,
-          targetLanguage: options.targetLanguage,
-          translatedText: restored,
-          provider: result.provider,
-        });
+        if (result.provider !== 'demo') {
+          await this.memory.put({
+            sourceText: item.text,
+            sourceLanguage: options.sourceLanguage,
+            targetLanguage: options.targetLanguage,
+            translatedText: restored,
+            provider: result.provider,
+          });
+        }
       }
       completed += batch.length;
       options.onProgress?.({ completed, total: unique.length, cacheHits });

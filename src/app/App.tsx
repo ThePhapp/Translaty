@@ -11,6 +11,7 @@ import { loadSettings, saveSettings, type AppSettings } from '../storage/setting
 import { createTranslationMemory } from '../storage/translationMemory';
 import { TranslationService } from '../translation/core/translationService';
 import { DemoTranslationProvider } from '../translation/providers/demoProvider';
+import { MyMemoryProvider } from '../translation/providers/myMemoryProvider';
 import { OpenAiCompatibleProvider } from '../translation/providers/openAiCompatibleProvider';
 import type { TranslateFunction } from '../types/app';
 
@@ -44,13 +45,18 @@ export function App() {
     document.documentElement.dataset.theme = dark ? 'dark' : 'light';
   }, [settings.theme]);
 
-  const provider = useMemo(
-    () =>
-      settings.provider === 'openai-compatible'
-        ? new OpenAiCompatibleProvider({ apiKey, baseUrl: settings.baseUrl, model: settings.model })
-        : new DemoTranslationProvider(),
-    [apiKey, settings.baseUrl, settings.model, settings.provider],
-  );
+  const provider = useMemo(() => {
+    if (settings.provider === 'openai-compatible') {
+      return new OpenAiCompatibleProvider({
+        apiKey,
+        baseUrl: settings.baseUrl,
+        model: settings.model,
+      });
+    }
+    return settings.provider === 'mymemory'
+      ? new MyMemoryProvider()
+      : new DemoTranslationProvider();
+  }, [apiKey, settings.baseUrl, settings.model, settings.provider]);
 
   const translate: TranslateFunction = useCallback(
     async (texts, overrides = {}) => {

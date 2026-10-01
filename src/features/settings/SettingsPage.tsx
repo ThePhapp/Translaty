@@ -67,10 +67,28 @@ export function SettingsPage({ settings, updateSettings, apiKey, setApiKey }: Pr
                 updateSettings({ provider: event.target.value as AppSettings['provider'] })
               }
             >
-              <option value="demo">Local demo (offline)</option>
+              <option value="mymemory">MyMemory Free (online)</option>
+              <option value="demo">Offline preview (limited phrases)</option>
               <option value="openai-compatible">OpenAI compatible</option>
             </select>
           </label>
+          {settings.provider === 'mymemory' && (
+            <div className="privacy-callout online">
+              <ShieldCheck size={17} />
+              <span>
+                Text is sent to the public MyMemory service. No API key is required; use it for
+                short text only.
+              </span>
+            </div>
+          )}
+          {settings.provider === 'demo' && (
+            <div className="privacy-callout">
+              <ShieldCheck size={17} />
+              <span>
+                Fully offline, but intentionally limited to a small phrase set for UI testing.
+              </span>
+            </div>
+          )}
           {settings.provider === 'openai-compatible' && (
             <>
               <label className="field">

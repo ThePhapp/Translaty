@@ -72,7 +72,11 @@ export function QuickTranslatePage({ settings, updateSettings, translate, draft 
         actions={
           <span className="provider-pill">
             <span />
-            {settings.provider === 'demo' ? 'Local demo' : settings.model}
+            {settings.provider === 'demo'
+              ? 'Offline preview'
+              : settings.provider === 'mymemory'
+                ? 'MyMemory Free · online'
+                : settings.model}
           </span>
         }
       />

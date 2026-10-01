@@ -14,7 +14,7 @@ Translaty is a local-first Tauri application for the translation work that happe
 - **i18n Translate** — nested JSON value traversal, placeholder protection, deduplication, diff preview, and export. Keys are never translated.
 - **Translation Memory** — SQLite in Tauri and an in-memory browser adapter; successful results are reused locally.
 - **Glossary** — manual terms plus JSON/CSV import; only terms relevant to the current batch enter the provider prompt.
-- **Provider choice** — an offline deterministic demo and an opt-in OpenAI-compatible endpoint.
+- **Provider choice** — no-key MyMemory translation for short text, an offline preview, and an opt-in OpenAI-compatible endpoint.
 
 ## Clipboard workflow
 
@@ -77,7 +77,7 @@ Build platform installers with `npm run tauri build`. Tauri supports Windows, ma
 
 ## Provider setup
 
-The local demo provider is selected by default and sends nothing over the network. To use an OpenAI-compatible service, open **Settings**, select the provider, then enter its base URL, model, and API key. The MVP keeps the API key in process memory only—it is not persisted or committed.
+MyMemory Free is selected by default so a fresh install can translate short text without an API key. Text translated with it is sent to the public MyMemory service. The offline preview sends nothing but supports only a small phrase set. For longer or batched content, select an OpenAI-compatible service and enter its base URL, model, and API key. The MVP keeps that key in process memory only—it is not persisted or committed.
 
 Copy `.env.example` only for non-secret endpoint/model defaults. Never put API keys in Vite environment variables because those values are bundled into frontend code.
 
@@ -85,7 +85,7 @@ Copy `.env.example` only for non-secret endpoint/model defaults. Never put API k
 
 - No telemetry.
 - Translation history and memory stay on the device.
-- The demo provider is fully local.
+- The offline preview is fully local; MyMemory and OpenAI-compatible providers are remote.
 - A remote provider receives only strings that missed translation memory; file structure and timestamps are excluded.
 - API keys are not logged or persisted by the frontend.
 

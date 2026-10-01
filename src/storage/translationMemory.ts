@@ -25,7 +25,8 @@ export class InMemoryTranslationMemory implements TranslationMemory {
   private readonly records = new Map<string, MemoryRecord>();
 
   async get(query: MemoryQuery): Promise<MemoryRecord | undefined> {
-    return this.records.get(memoryKey(query));
+    const record = this.records.get(memoryKey(query));
+    return record?.provider === 'demo' ? undefined : record;
   }
 
   async put(record: MemoryRecord): Promise<void> {
@@ -62,7 +63,8 @@ export class SqliteTranslationMemory implements TranslationMemory {
     const db = await this.database();
     const rows = await db.select<Array<{ translated_text: string; provider: string }>>(
       `SELECT translated_text, provider FROM translation_memory
-       WHERE normalized_source = $1 AND source_lang = $2 AND target_lang = $3 LIMIT 1`,
+       WHERE normalized_source = $1 AND source_lang = $2 AND target_lang = $3
+         AND provider <> 'demo' LIMIT 1`,
       [normalizeForMemory(query.sourceText), query.sourceLanguage, query.targetLanguage],
     );
     const row = rows[0];

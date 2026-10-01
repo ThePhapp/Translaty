@@ -1,6 +1,7 @@
 import type { TranslationProvider, TranslationRequest } from '../../types/translation';
 
 const VIETNAMESE: Record<string, string> = {
+  hi: 'Xin chào',
   hello: 'Xin chào',
   save: 'Lưu',
   cancel: 'Hủy',
@@ -11,7 +12,7 @@ const VIETNAMESE: Record<string, string> = {
 
 export class DemoTranslationProvider implements TranslationProvider {
   readonly id = 'demo';
-  readonly name = 'Local demo';
+  readonly name = 'Offline preview';
   readonly supportsAutoDetect = true;
 
   async translate(request: TranslationRequest) {

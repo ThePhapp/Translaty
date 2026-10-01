@@ -22,7 +22,7 @@ feature input -> collect strings -> protect placeholders -> normalize/deduplicat
   -> cache successes -> map results to original locations -> export
 ```
 
-Providers implement a small contract and never reach into React state. A deterministic demo provider keeps development and offline previews usable; the OpenAI-compatible provider is opt-in and uses a session-only API key in the MVP.
+Providers implement a small contract and never reach into React state. MyMemory provides no-key translation for short text, a deterministic offline preview supports UI development, and the OpenAI-compatible provider handles configurable endpoints with a session-only API key. Preview output is never added to translation memory.
 
 ## Data and security
 

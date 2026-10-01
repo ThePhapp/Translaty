@@ -53,4 +53,19 @@ describe('TranslationService', () => {
       memory.get({ sourceText: 'Hello {name}', sourceLanguage: 'en', targetLanguage: 'vi' }),
     ).resolves.toBeUndefined();
   });
+
+  it('does not cache offline preview output', async () => {
+    const provider = createProvider();
+    Object.defineProperty(provider, 'id', { value: 'demo' });
+    provider.translate = vi.fn(async (request: TranslationRequest) => ({
+      provider: 'demo',
+      items: request.items.map((item) => ({ id: item.id, text: `[VI] ${item.text}` })),
+    }));
+    const memory = new InMemoryTranslationMemory();
+    const service = new TranslationService(provider, memory);
+    await service.translateTexts(['Unknown'], { sourceLanguage: 'en', targetLanguage: 'vi' });
+    await expect(
+      memory.get({ sourceText: 'Unknown', sourceLanguage: 'en', targetLanguage: 'vi' }),
+    ).resolves.toBeUndefined();
+  });
 });
