@@ -1,0 +1,18 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Permissions for the Translaty main window",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "clipboard-manager:allow-read-text",
+    "clipboard-manager:allow-write-text",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "global-shortcut:allow-register",
+    "global-shortcut:allow-unregister",
+    "sql:allow-load",
+    "sql:allow-select",
+    "sql:allow-execute"
+  ]
+}
